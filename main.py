@@ -4,6 +4,7 @@ from aiogram.filters import Command  # Обратите внимание, что
 from aiogram import Router
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.types import WebAppInfo
+import json
 
 API_TOKEN = '7847156503:AAFV9KDkIe7jOoIv72TRBFP4knHqApRJTnY'
 
@@ -24,6 +25,12 @@ async def start_command(message: types.Message):
 
     # Регистрируем маршрутизатор
 dp.include_router(router)
+
+@router.message(content_types=['web_app_data'])
+async def web_app(message: types.Message):
+    res = json.loads(message.web_app_data.data)
+    await message.answer(f'Name- {res["name"]}. Email- {res["email"]}. phone number -{res["phone"]}')
+
 
 async def main():
     print("Запуск бота...")
