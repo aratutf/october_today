@@ -68,6 +68,34 @@
         <p>Красивое дерево. Вам оно нравится?</p>
         <button id="buy">Купить</button>
     </div>
+
+    <form id ="form">
+        <input tye ="text" pleceholder ="name" id ="user_name">
+        <input tye ="text" pleceholder ="email" id ="user_email">
+        <input tye ="text" pleceholder ="number" id ="user_number">
+        <button id="order">оформить</button>
+    </form>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        let tg =window.Telegram.WebApp;
+        let buy =document.getElementById("buy");
+        let order =document.getElementById("order");
+
+        buy.addEventListener("click", ()=>
+        {
+           document.getElementById("main").style.display = "none";
+           document.getElementById("form").style.display = "block";
+           document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name
+ 
+        });
+
+
+        order.addEventListener("click", ()=>
+        {
+           tg.close();
+        });
+    </script>
+
+
 </body>
 </html>
