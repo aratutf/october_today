@@ -1,5 +1,6 @@
 import asyncio
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types, filters
+
 from aiogram.filters import Command  # Обратите внимание, что используется фильтр команд
 from aiogram import Router
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -26,7 +27,7 @@ async def start_command(message: types.Message):
     # Регистрируем маршрутизатор
 dp.include_router(router)
 
-@router.message(content_types=['web_app_data'])
+@router.message(lambda message: message.web_app_data is not None)
 async def web_app(message: types.Message):
     res = json.loads(message.web_app_data.data)
     await message.answer(f'Name- {res["name"]}. Email- {res["email"]}. phone number -{res["phone"]}')
